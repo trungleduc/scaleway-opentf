@@ -1,3 +1,20 @@
+variable "access_key" {
+  description = "Scaleway access key for authentication"
+  type        = string
+  sensitive   = true
+}
+
+variable "secret_key" {
+  description = "Scaleway secret key for authentication"
+  type        = string
+  sensitive   = true
+}
+
+variable "region" {
+  description = "Scaleway region for the cluster"
+  type        = string
+  default     = "fr-par" # Default region
+}
 variable "cluster_name" {
   description = "Name of the Kubernetes cluster"
   type        = string
@@ -8,8 +25,8 @@ variable "k8s_version" {
   type        = string
 }
 
-variable "region" {
-  description = "Scaleway region"
+variable "pool_name" {
+  description = "Name of the pool"
   type        = string
 }
 

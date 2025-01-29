@@ -1,0 +1,11 @@
+cluster_name        = "dev-cluster"
+k8s_version         = "1.25.3"
+region              = "fr-par"
+node_type           = "DEV1-S"
+node_count          = 2
+autohealing         = true
+autoscaling         = true
+min_size            = 1
+max_size            = 3
+pool_name           = "dev-pool"
+github_organization = "trungleduc"
