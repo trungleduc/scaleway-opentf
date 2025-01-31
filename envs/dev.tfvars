@@ -10,5 +10,4 @@ max_size     = 1
 pool_name    = "dev-pool"
 
 github_organization = "trungleduc"
-github_token        = "foo"
 repository          = "nginx-k8s"
