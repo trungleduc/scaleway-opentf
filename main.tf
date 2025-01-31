@@ -1,17 +1,19 @@
 module "k8s_cluster" {
-  source       = "./modules/k8s-cluster"
-  access_key   = var.scaleway_access_key
-  secret_key   = var.scaleway_secret_key
-  cluster_name = var.cluster_name
-  pool_name    = var.pool_name
-  k8s_version  = var.k8s_version
-  region       = var.region
-  node_type    = var.node_type
-  node_count   = var.node_count
-  autohealing  = var.autohealing
-  autoscaling  = var.autoscaling
-  min_size     = var.min_size
-  max_size     = var.max_size
+  source          = "./modules/k8s-cluster"
+  access_key      = var.scaleway_access_key
+  secret_key      = var.scaleway_secret_key
+  organization_id = var.scaleway_organization_id
+  project_id      = var.scaleway_project_id
+  cluster_name    = var.cluster_name
+  pool_name       = var.pool_name
+  k8s_version     = var.k8s_version
+  region          = var.region
+  node_type       = var.node_type
+  node_count      = var.node_count
+  autohealing     = var.autohealing
+  autoscaling     = var.autoscaling
+  min_size        = var.min_size
+  max_size        = var.max_size
 }
 
 module "github_secrets" {

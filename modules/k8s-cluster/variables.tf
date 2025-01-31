@@ -10,6 +10,19 @@ variable "secret_key" {
   sensitive   = true
 }
 
+variable "organization_id" {
+  description = "Scaleway organization id"
+  type        = string
+  sensitive   = true
+}
+variable "project_id" {
+  description = "Scaleway project id"
+  type        = string
+  sensitive   = true
+}
+
+
+
 variable "region" {
   description = "Scaleway region for the cluster"
   type        = string

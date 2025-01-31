@@ -18,7 +18,7 @@ resource "github_actions_secret" "kubeconfig" {
   repository      = var.repository # Repository to save the secret (optional for organization-wide secrets)
 }
 
-resource "github_organization_secret" "org_kubeconfig" {
+resource "github_actions_organization_secret" "org_kubeconfig" {
   secret_name     = var.secret_name
   plaintext_value = var.kubeconfig
   visibility      = "all" # Make it visible to all repositories in the organization

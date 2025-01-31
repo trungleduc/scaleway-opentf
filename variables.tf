@@ -10,6 +10,17 @@ variable "scaleway_secret_key" {
   sensitive   = true
 }
 
+variable "scaleway_organization_id" {
+  type      = string
+  sensitive = true
+}
+
+variable "scaleway_project_id" {
+  type      = string
+  sensitive = true
+}
+
+
 variable "scaleway_region" {
   description = "Scaleway region for the cluster"
   type        = string
@@ -68,4 +79,28 @@ variable "min_size" {
 variable "max_size" {
   description = "Maximum number of nodes in the pool"
   type        = number
+}
+
+variable "github_organization" {
+  description = "GitHub organization name"
+  type        = string
+}
+
+
+variable "github_token" {
+  description = "GitHub personal access token with 'secrets' scope"
+  type        = string
+  sensitive   = true
+}
+
+variable "repository" {
+  description = "GitHub repository to save the secret (optional)"
+  type        = string
+  default     = null
+}
+
+variable "secret_name" {
+  description = "GitHub Action secret name"
+  type        = string
+  default     = null
 }
