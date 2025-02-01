@@ -11,9 +11,10 @@ terraform {
 
 resource "scaleway_k8s_cluster" "cluster" {
   name                        = var.cluster_name
+  tags                        = ["managed-by-terraform"]
   version                     = var.k8s_version
   cni                         = "cilium"
-  tags                        = ["managed-by-terraform"]
+  type                        = "kapsule"
   private_network_id          = var.private_network_id
   region                      = var.region
   delete_additional_resources = false
@@ -21,6 +22,7 @@ resource "scaleway_k8s_cluster" "cluster" {
 
 resource "scaleway_k8s_pool" "pool" {
   cluster_id  = scaleway_k8s_cluster.cluster.id
+  tags        = ["managed-by-terraform"]
   name        = var.pool_name
   node_type   = var.node_type
   size        = var.node_count

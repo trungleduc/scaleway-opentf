@@ -10,6 +10,7 @@ terraform {
 
 resource "scaleway_vpc_private_network" "private_network" {
   name = var.name
+  tags = ["managed-by-terraform"]
 }
 
 output "id" {

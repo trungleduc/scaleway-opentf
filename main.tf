@@ -40,12 +40,3 @@ module "k8s_cluster" {
     scaleway = scaleway
   }
 }
-
-module "github_secrets" {
-  source              = "./modules/github-secrets"
-  github_token        = var.github_token
-  github_organization = var.github_organization
-  repository          = var.repository # Optional, if you want repo-specific secrets
-  secret_name         = "KUBECONFIG_${var.env_name}_cluster"
-  kubeconfig          = module.k8s_cluster.kubeconfig
-}
