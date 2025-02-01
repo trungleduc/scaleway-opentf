@@ -74,3 +74,8 @@ variable "max_size" {
   description = "Maximum number of nodes in the pool"
   type        = number
 }
+
+variable "private_network_id" {
+  description = "Private network ID"
+  type        = string
+}

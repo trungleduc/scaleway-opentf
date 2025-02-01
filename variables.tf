@@ -1,3 +1,9 @@
+variable "env_name" {
+  description = "Deployment name"
+  type        = string
+}
+
+
 variable "scaleway_access_key" {
   description = "Scaleway access key for authentication"
   type        = string
