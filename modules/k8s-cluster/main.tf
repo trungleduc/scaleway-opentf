@@ -7,19 +7,13 @@ terraform {
   }
 }
 
-provider "scaleway" {
-  region          = var.region
-  access_key      = var.access_key
-  secret_key      = var.secret_key
-  organization_id = var.organization_id
-  project_id      = var.project_id
-}
+
 
 resource "scaleway_k8s_cluster" "cluster" {
   name                        = var.cluster_name
   version                     = var.k8s_version
   cni                         = "cilium"
-  tags                        = ["manageed-by-terraform"]
+  tags                        = ["managed-by-terraform"]
   private_network_id          = var.private_network_id
   region                      = var.region
   delete_additional_resources = false

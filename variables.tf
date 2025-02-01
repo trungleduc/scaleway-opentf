@@ -33,16 +33,6 @@ variable "scaleway_region" {
   default     = "fr-par" # Default region
 }
 
-variable "cluster_name" {
-  description = "Name of the Kubernetes cluster"
-  type        = string
-}
-
-variable "pool_name" {
-  description = "Name of the pool"
-  type        = string
-}
-
 variable "k8s_version" {
   description = "Kubernetes version"
   type        = string

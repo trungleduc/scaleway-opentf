@@ -1,3 +1,11 @@
+provider "scaleway" {
+  region          = var.region
+  access_key      = var.scaleway_access_key
+  secret_key      = var.scaleway_secret_key
+  organization_id = var.scaleway_organization_id
+  project_id      = var.scaleway_project_id
+}
+
 module "private_network" {
   source = "./modules/private-network"
   name   = "${var.env_name}_private_network"
@@ -5,15 +13,11 @@ module "private_network" {
 
 module "k8s_cluster" {
   source             = "./modules/k8s-cluster"
-  access_key         = var.scaleway_access_key
-  secret_key         = var.scaleway_secret_key
-  organization_id    = var.scaleway_organization_id
-  project_id         = var.scaleway_project_id
+  region             = var.region
   private_network_id = module.private_network.id
   cluster_name       = "${var.env_name}_cluster"
   pool_name          = "${var.env_name}_pool"
   k8s_version        = var.k8s_version
-  region             = var.region
   node_type          = var.node_type
   node_count         = var.node_count
   autohealing        = var.autohealing

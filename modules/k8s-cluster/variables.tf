@@ -1,28 +1,3 @@
-variable "access_key" {
-  description = "Scaleway access key for authentication"
-  type        = string
-  sensitive   = true
-}
-
-variable "secret_key" {
-  description = "Scaleway secret key for authentication"
-  type        = string
-  sensitive   = true
-}
-
-variable "organization_id" {
-  description = "Scaleway organization id"
-  type        = string
-  sensitive   = true
-}
-variable "project_id" {
-  description = "Scaleway project id"
-  type        = string
-  sensitive   = true
-}
-
-
-
 variable "region" {
   description = "Scaleway region for the cluster"
   type        = string
