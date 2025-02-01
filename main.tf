@@ -40,3 +40,14 @@ module "k8s_cluster" {
     scaleway = scaleway
   }
 }
+
+module "store_kubeconfig" {
+  source             = "./modules/secret-manager"
+  secret_name        = "KUBECONFIG_${var.env_name}_cluster"
+  secret_value       = module.k8s_cluster.kubeconfig
+  secret_description = "Kubeconfig for ${var.env_name} Kubernetes cluster"
+
+  providers = {
+    scaleway = scaleway
+  }
+}
