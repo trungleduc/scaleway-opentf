@@ -1,3 +1,12 @@
+terraform {
+  required_providers {
+    scaleway = {
+      source  = "scaleway/scaleway"
+      version = "~> 2.14"
+    }
+  }
+}
+
 provider "scaleway" {
   region          = var.region
   access_key      = var.scaleway_access_key
@@ -9,6 +18,9 @@ provider "scaleway" {
 module "private_network" {
   source = "./modules/private-network"
   name   = "${var.env_name}_private_network"
+  providers = {
+    scaleway = scaleway
+  }
 }
 
 module "k8s_cluster" {
@@ -24,6 +36,9 @@ module "k8s_cluster" {
   autoscaling        = var.autoscaling
   min_size           = var.min_size
   max_size           = var.max_size
+  providers = {
+    scaleway = scaleway
+  }
 }
 
 module "github_secrets" {
