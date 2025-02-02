@@ -37,3 +37,16 @@ output "kubeconfig" {
   value     = scaleway_k8s_cluster.cluster.kubeconfig[0].config_file
   sensitive = true
 }
+
+output "apiserver_url" {
+  value     = scaleway_k8s_cluster.cluster.kubeconfig[0].host
+  sensitive = true
+}
+output "cluster_ca_certificate" {
+  value     = scaleway_k8s_cluster.cluster.kubeconfig[0].cluster_ca_certificate
+  sensitive = true
+}
+output "cluster_token" {
+  value     = scaleway_k8s_cluster.cluster.kubeconfig[0].token
+  sensitive = true
+}

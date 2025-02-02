@@ -51,3 +51,39 @@ module "store_kubeconfig" {
     scaleway = scaleway
   }
 }
+
+module "container_registry" {
+  source          = "./modules/container-registry"
+  name            = "${var.env_name}_container_registry"
+  scaleway_region = var.region
+  providers = {
+    scaleway = scaleway
+  }
+}
+
+provider "kubernetes" {
+  host                   = module.k8s_cluster.apiserver_url
+  cluster_ca_certificate = base64decode(module.k8s_cluster.cluster_ca_certificate)
+  token                  = module.k8s_cluster.cluster_token
+}
+
+resource "kubernetes_secret" "container_registry_secret" {
+  metadata {
+    name      = "scaleway-container-registry-secret"
+    namespace = "default"
+  }
+
+  data = {
+    ".dockerconfigjson" = jsonencode({
+      auths = {
+        "${module.container_registry.registry_url}" = {
+          "username" = var.scaleway_access_key
+          "password" = var.scaleway_secret_key
+          "auth"     = base64encode("${var.scaleway_access_key}:${var.scaleway_secret_key}")
+        }
+      }
+    })
+  }
+
+  type = "kubernetes.io/dockerconfigjson"
+}
