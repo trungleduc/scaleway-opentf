@@ -44,12 +44,14 @@ SCALEWAY_ACCESS_KEY: your-scaleway-access-key
 SCALEWAY_SECRET_KEY: your-scaleway-secret-key
 SCALEWAY_PROJECT_ID: your-scaleway-project-id
 SCALEWAY_REGION: your-scaleway-region
+SCALEWAY_ORGANIZATION_ID: your-scaleway-organization-id
 ```
 
 and environment `dev`, `qa`, `prod` with the following variables:
 
 ```bash
 ENV_NAME= #dev or qa or prod
+SCALEWAY_REGION= #your-scaleway-region
 ```
 
 ### How to get kubeconfig
@@ -61,16 +63,22 @@ The kubeconfig file is stored in Scaleway Secret Manager. You can retrieve it in
 - name: Authenticate with Scaleway
   uses: scaleway/action-scw@v0
   with:
-    access_key: ${{ secrets.SCALEWAY_ACCESS_KEY }}
-    secret_key: ${{ secrets.SCALEWAY_SECRET_KEY }}
-    project_id: ${{ secrets.SCALEWAY_PROJECT_ID }}
-    region: ${{ secrets.SCALEWAY_REGION }}
+    save-config: true
+    export-config: true
+    access-key: ${{ secrets.SCALEWAY_ACCESS_KEY }}
+    secret-key: ${{ secrets.SCALEWAY_SECRET_KEY }}
+    default-project-id: ${{ secrets.SCALEWAY_PROJECT_ID }}
+    default-organization-id: ${{ secrets.SCALEWAY_ORGANIZATION_ID }}
 
 - name: Fetch Kubeconfig from Scaleway Secret Manager
   run: |
     SECRET_NAME="KUBECONFIG_${{ vars.ENV_NAME }}_cluster"
-    KUBECONFIG_CONTENT=$(scw secret version get latest ${SECRET_NAME} --output=json | jq -r '.data[0].value')
-    echo "$KUBECONFIG_CONTENT" > kubeconfig.yaml
+    KUBECONFIG_BASE64=$(scw secret version access-by-path secret-name="$SECRET_NAME" revision=1 --output=json | jq -r '.data')
+    if [[ -z "$KUBECONFIG_BASE64" ]]; then
+      echo "Error: No value found for secret $SECRET_NAME"
+      exit 1
+    fi
+    echo "$KUBECONFIG_BASE64" | base64 --decode > kubeconfig.yaml
     echo "KUBECONFIG=$(pwd)/kubeconfig.yaml" >> $GITHUB_ENV
 ```
 
@@ -84,5 +92,5 @@ Opentofu will create 3 container registry namespaces: `{dev|qa|prod}_container_r
   with:
     username: nologin
     password: ${{ secrets.SCALEWAY_SECRET_KEY }}
-    registry: rg.${{ secrets.SCALEWAY_REGION }}.scw.cloud/${{ vars.ENV_NAME }}_container_registry
+    registry: rg.${{ vars.SCALEWAY_REGION }}.scw.cloud/${{ vars.ENV_NAME }}_container_registry
 ```
